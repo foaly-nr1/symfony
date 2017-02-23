@@ -61,4 +61,22 @@ class NumberTypeTest extends TestCase
 
         $this->assertSame('12346', $view->vars['value']);
     }
+
+    public function test3737()
+    {
+        $form = $this->factory->create('Symfony\Component\Form\Extension\Core\Type\NumberType', null, array('scale' => 2, 'rounding_mode' => \NumberFormatter::ROUND_DOWN,));
+        $form->setData('37.37');
+        $view = $form->createView();
+
+        $this->assertSame('37,37', $view->vars['value']);
+    }
+
+    public function test3736to3737()
+    {
+        $form = $this->factory->create('Symfony\Component\Form\Extension\Core\Type\NumberType', 37.36, array('scale' => 2, 'rounding_mode' => \NumberFormatter::ROUND_DOWN,));
+        $form->setData('37.37');
+        $view = $form->createView();
+
+        $this->assertSame('37,37', $view->vars['value']);
+    }
 }
